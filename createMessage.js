@@ -35,7 +35,7 @@ var updateFair = function(fairprice, book) {
 	fairprice.prices[symb] = [highestBuy, lowestSell];
 };
 
-var buy = function(orderId, symbol, price, size) {
+var buy = function(symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -44,7 +44,7 @@ var buy = function(orderId, symbol, price, size) {
 		size);
 }
 
-var sell = function(orderId, symbol, price, size) {
+var sell = function(symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -75,10 +75,26 @@ var Foo = function(type, orderId, symbol, dir, price, size) {
 	this.size = size;
 }
 
+// add, remove, confirm ()
+var OurOrders = function() {
+	this.orders = []; // each element will be a tuple, with order object, and livestate
+}
+
+OurOrders.prototype.ack = function(id) {
+
+}
+
+OurOrders.prototype.add
+
+
+
+
+
+
 module.exports.FairPrices = FairPrices;
 module.exports.updateFair = updateFair;
 module.exports.Foo = Foo;
 module.exports.convert = convert;
 module.exports.cancel = cancel;
 module.exports.sell = sell;
-module.exports.buy = sell;
+module.exports.buy = sbuy;
