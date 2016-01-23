@@ -65,7 +65,7 @@ function handleData (data) {
     }
     // Book
     if (parsed.type.match(/book/i)) {
-        bs.updateFair(book, parsed); 
+        //bs.updateBook(book, parsed); 
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
