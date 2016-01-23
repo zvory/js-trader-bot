@@ -25,13 +25,21 @@ MarketLogic.prototype.getActions = function() {
         var fairValue = this.books.getFairValue(symb);
 
         if (highSell[0] - 1 > lowBuy[0]) {
-        	if (!(this.orders.orders.filter(function(order) {
-        		return order.symbol == symb && order.dir == "buy";
-        	})))
+        	var buy= false;
+        	var sell=false;
+        	var ord = this.orders.orders;
+        	for (var i in this.orders.orders){
+        		if (ord.hasOwnProperty(i) && ord[i].symbol == symb){
+        		 	if (ord[i].dir == "buy")
+        				buy = true;
+        			else 
+        				sell = false;
+        		}
+
+        	}
+        	if (!buy)
         		actions.push (cm.buy(symb, highSell[0] - 1, 1));
-        	if (!(this.orders.filter(function(order) {
-        		return order.symbol == symb && order.dir == "sell";
-        	})))
+        	if (!sell)
         		actions.push (cm.sell(symb, lowBuy[0] + 1, 1));
         }
         /*
