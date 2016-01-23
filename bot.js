@@ -8,7 +8,6 @@ var PORT = 25000;
 
 
 var logic = new ml.MarketLogic(); 
-var orders = new ml.OurOrders();
 
 client.connect(PORT, HOST, function() {
 
@@ -62,19 +61,19 @@ function handleData (data) {
     }
     // Book
     if (parsed.type.match(/book/i)) {
-        logic.updateBook(parsed); 
+        logic.update(parsed); 
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
-        orders.ack(parsed.order_id);
+        logic.orders.ack(parsed.order_id);
     }
     // Fill
     if (parsed.type.match(/fill/i)) {
-        orders.fill(parsed.order_id, parsed.size);
+        logic.orders.fill(parsed.order_id, parsed.size);
     }
     // Out
     if (parsed.type.match(/out/i)) {
-        orders.out(parsed.order_id);
+        logic.orders.out(parsed.order_id);
     }
 }
 
