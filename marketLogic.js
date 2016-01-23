@@ -6,6 +6,9 @@ var threshold = 2;
 var MarketLogic = function() {
 	var books = new Books();
 	var orders = new OurOrders();
+
+	var open = function() {return true};
+	var close = function() {return true};
 }
 
 MarketLogic.prototype.update = function(book) {
@@ -19,7 +22,7 @@ MarketLogic.prototype.getActions = function() {
 	var highSell = this.books.getCurrBook("BOND").sell[0];
 	if (highSell[0] <= 999) {
 		return [cm.buy("BOND", highSell[0], highSell[1]),
-		cm.sell("BOND", 1000, highSell[1])];
+				cm.sell("BOND", 1000, highSell[1])];
 	}
 	return [];
 }
