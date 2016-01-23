@@ -38,14 +38,19 @@ MarketLogic.prototype.getActions = function() {
 
         	}
         	if (!buy) {
-        		actions.push (cm.buy(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb))
-        			, symb, highSell[0] - 1, 1));
+                var purchase = cm.buy(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb))
+        			, symb, highSell[0] - 1, 1);
+                console.log(purchase);
+        		actions.push (purchase);
+                this.orders.add(purchase);
         	}
         	else
         		console.log("can't buy");
         	if (!sell) {
-        		actions.push (cm.sell(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb)), 
-        			symb, lowBuy[0] + 1, 1));
+                var sale = cm.sell(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb)), 
+        			symb, lowBuy[0] + 1, 1);
+        		actions.push (sale);
+                this.orders.add(sale);
         	}
         	else
         		console.log("can't sell");
