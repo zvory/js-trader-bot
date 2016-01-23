@@ -37,10 +37,16 @@ MarketLogic.prototype.getActions = function() {
         		}
 
         	}
-        	if (!buy)
+        	if (!buy) {
         		actions.push (cm.buy(symb, highSell[0] - 1, 1));
-        	if (!sell)
+        	}
+        	else
+        		console.log("can't buy");
+        	if (!sell) {
         		actions.push (cm.sell(symb, lowBuy[0] + 1, 1));
+        	}
+        	else
+        		console.log("can't sell");
         }
         /*
         if (highSell && highSell[0] <= fairValue - 1){
