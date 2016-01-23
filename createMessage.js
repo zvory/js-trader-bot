@@ -40,41 +40,8 @@ var Foo = function(type, orderId, symbol, dir, price, size) {
 	this.size = size;
 }
 
-
-// add, remove, confirm ()
-var OurOrders = function() {
-	this.orders = {
-
-	}; // each element will be a tuple, with order object, and livestate
-} 
-
-	OurOrders.prototype.ack = function(id) {
-	if(this.orders[id])
-		this.orders[id][0] = true;
-}
-
-OurOrders.prototype.add = function(foo) {
-	this.orders[foo.order_id] = [false, foo];
-}
-
-
-OurOrders.prototype.out = function(id) {
-	if(this.orders[id])
-		delete this.orders[id];
-}
-
-OurOrders.prototype.fill = function(id, size) {
-	if(this.orders[id])
-		this.orders[id][1].size -= size;
-}
-
-
-
-module.exports.OurOrders = OurOrders;
 module.exports.Foo = Foo;
 module.exports.convert = convert;
 module.exports.cancel = cancel;
 module.exports.sell = sell;
 module.exports.buy = buy;
-module.exports.Books = Books;
-
