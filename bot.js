@@ -98,11 +98,10 @@ function makeBuyOrder (order) {
 
 var bought = false;
 function bot () {
-    if (orders.
+    console.log(books);
     if (!bought)
         makeBuyOrder (bs.buy("BOND", 999, 1));
     bought=true;
-    console.log(orders.orders);
 }
 
 setInterval(bot, 10);

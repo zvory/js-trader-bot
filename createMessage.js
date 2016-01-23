@@ -2,8 +2,8 @@ var MAX_INT = 2147483647;
 
 var Books = function() {
 	this.books ={
-		BOND: "bond undefined",
-		VALBZ: "valbz",
+		BOND:false,
+		VALBZ:false, 
 		VALE: false,
 		GS: false,
 		MS: false,
@@ -13,7 +13,7 @@ var Books = function() {
 };
 
 Books.prototype.updateBook = function(book) {
-	this.books[book.type] = book;
+	this.books[book.symbol] = book;
 };
 
 Books.prototype.getBook = function(type) {
