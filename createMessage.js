@@ -1,25 +1,5 @@
 var MAX_INT = 2147483647;
 
-var Books = function() {
-	this.books ={
-		BOND:false,
-		VALBZ:false, 
-		VALE: false,
-		GS: false,
-		MS: false,
-		WFC: false,
-		XLF: false
-	};
-};
-
-Books.prototype.updateBook = function(book) {
-	this.books[book.symbol] = book;
-};
-
-Books.prototype.getBook = function(type) {
-	return this.books[type];
-};
-
 var buy = function(symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
