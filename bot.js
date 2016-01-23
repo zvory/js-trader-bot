@@ -3,7 +3,7 @@ var ml = require('./marketLogic');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
-var HOST = 'test-exch-nerve';
+var HOST = 'production';
 var PORT = 25000;
 
 
@@ -45,7 +45,7 @@ function handleData (data) {
     // Order Rejection
     if (parsed.type.match(/REJECT/i)) {
         console.log("REJECTED" + parsed.error);
-        orders.out(parsed.order_id);
+        logic.orders.out(parsed.order_id);
     }
     // Trade
     if (parsed.type.match(/trade/i)) {
@@ -53,9 +53,13 @@ function handleData (data) {
     }
     // Open
     if (parsed.type.match(/open/i)) {
+        setInterval(bot, 10);
+
     }
     // Close
     if (parsed.type.match(/close/i)) {
+        clearInterval(botreset);
+
     }
     // Book
     if (parsed.type.match(/book/i)) {
@@ -96,4 +100,4 @@ function bot () {
     
 }
 
-setInterval(bot, 10);
+var botreset = setInterval(bot, 10);
