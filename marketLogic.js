@@ -1,4 +1,4 @@
-
+var MAX_INT = 2147483647;
 
 var MarketLogic = function() {
 	var books = new Books();
@@ -39,8 +39,9 @@ Books.prototype.getFairValue = function(type) {
 }
 
 Books.prototype.getHighestBuys = function(type) {
-	this.books[type].map(function(element) {
-
+	var typeBooks = this.books[type];
+	type.map(function(element) {
+		return element.buy.reduce();
 	});
 }
 
