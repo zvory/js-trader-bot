@@ -32,14 +32,9 @@ client.on('data', function(data) {
 
 });
 
-//DUMMY FUNCTION
-function _handleData(data){
-    console.log(data);
-}
 //FIX THIS LATER
 function handleData (data) {
     var parsed = JSON.parse(data);
-    console.log(parsed);
 
     // Initial Handshake
     if (parsed.type.match(/hello/i)) {
@@ -68,8 +63,7 @@ function handleData (data) {
     }
     // Book
     if (parsed.type.match(/book/i)) {
-
-
+        bs.updateFair(book, parsed); 
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
@@ -96,6 +90,7 @@ client.on('close', function(data) {
 
 
 function bot () {
+    console.log(book.getPrices());
 
 }
 
