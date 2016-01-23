@@ -5,7 +5,7 @@ var FairPrices = function() {
 	this.GS = [0, Number.MAX_SAFE_INTEGER];
 	this.MS = [0, Number.MAX_SAFE_INTEGER];
 	this.WFC = [0, Number.MAX_SAFE_INTEGER];
-	this.XLF = [0, Number.MAX_SAFE_INTEGER];
+	this.XLF = [0, -1];
 }
 
 FairPrices.prototype.getPrices = function () {
