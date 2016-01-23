@@ -1,4 +1,4 @@
-function FairPrices() {
+var FairPrices = function() {
 	this.BOND = [0, Number.MAX_SAFE_INTEGER];
 	this.VALBZ = [0, Number.MAX_SAFE_INTEGER];
 	this.VALE = [0, Number.MAX_SAFE_INTEGER];
@@ -8,7 +8,7 @@ function FairPrices() {
 	this.XLF = [0, Number.MAX_SAFE_INTEGER];
 }
 
-var update = function(fairprice, book) {
+var updateFair = function(fairprice, book) {
 	var highestBuy = 0;
 	var lowestSell = 0;
 	var buys = book.buy;
@@ -23,7 +23,7 @@ var update = function(fairprice, book) {
 	fairprice[symb] = [highestBuy, lowestSell];
 };
 
-function buy(orderId, symbol, price, size) {
+var buy = function(orderId, symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -32,7 +32,7 @@ function buy(orderId, symbol, price, size) {
 		size);
 }
 
-function sell(orderId, symbol, price, size) {
+var sell = function(orderId, symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -41,11 +41,11 @@ function sell(orderId, symbol, price, size) {
 		size);
 }
 
-function cancel(orderId) {
+var cancel = function(orderId) {
 	return new Foo("cancel", orderId);
 }
 
-function convert(symbol, dir, size) {
+var convert = function(symbol, dir, size) {
 	return new Foo("convert", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -54,7 +54,7 @@ function convert(symbol, dir, size) {
 		size);
 }
 
-function Foo(type, orderId, symbol, dir, price, size) {
+var Foo = function(type, orderId, symbol, dir, price, size) {
 	this.type = type;
 	this.order_id = orderId;
 	this.symbol = symbol;
@@ -62,3 +62,11 @@ function Foo(type, orderId, symbol, dir, price, size) {
 	this.price = price;
 	this.size = size;
 }
+
+module.exports.FairPrices = FairPrices;
+module.exports.updateFair = updateFair;
+module.exports.Foo = Foo;
+module.exports.convert = convert;
+module.exports.cancel = cancel;
+module.exports.sell = sell;
+module.exports.buy = sell;
