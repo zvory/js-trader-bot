@@ -83,14 +83,18 @@ var Foo = function(type, orderId, symbol, dir, price, size) {
 	this.size = size;
 }
 
+
+
 // add, remove, confirm ()
 var OurOrders = function() {
-	this.orders = []; // each element will be a tuple, with order object, and livestate
+	this.orders = {};// each element will be a tuple, with order object, and livestate
 }
 
 OurOrders.prototype.ack = function(id) {
-
+    this.orders[id].live = true;
 }
+
+
 
 OurOrders.prototype.add
 
