@@ -22,15 +22,27 @@ MarketLogic.prototype.getActions = function() {
     types.forEach(function (symb) {
         var highSell = this.books.getCurrBook(symb).sell[0];
         var lowBuy = this.books.getCurrBook(symb).buy[0];
+        var fairValue = this.books.getFairValue(symb);
 
-        if (highSell && highSell[0] <= this.books.getFairValue(symb) - 1 ) {
+        if (highSell[0] - 1 > lowBuy[0]) {
+        	if (!(this.orders.filter(function(order) {
+        		return order.symbol == symb && order.dir == "buy";
+        	})))
+        		actions.push (cm.buy(symb, highSell[0] - 1, 1));
+        	if (!(this.orders.filter(function(order) {
+        		return order.symbol == symb && order.dir == "sell";
+        	})))
+        		actions.push (cm.sell(symb, lowBuy[0] + 1, 1));
+        }
+        /*
+        if (highSell && highSell[0] <= fairValue - 1){
             console.log("buy");
             actions.push (cm.buy(symb, highSell[0] +1, 1));
         }
-        else if (lowBuy && lowBuy[0] >= this.books.getFairValue(symb) + 1){ 
+        else if (lowBuy && lowBuy[0] >= fairValue + 1){ 
             console.log("sell");
             actions.push(cm.sell(symb, lowBuy[0] -1, 1));
-        }
+        }*/
     }.bind(this));
 
 	return actions; 
