@@ -1,12 +1,14 @@
+var MAX_INT = 2147483647;
+
 var FairPrices = function() {
 	this.prices = {
-		BOND: [0, -1],
-		VALBZ: [0, -1],
-		VALE: [0, -1],
-		GS: [0, -1],
-		MS: [0, -1],
-		WFC: [0, -1],
-		XLF: [0, -1]
+		BOND: [0, MAX_INT],
+		VALBZ: [0, MAX_INT],
+		VALE: [0, MAX_INT],
+		GS: [0, MAX_INT],
+		MS: [0, MAX_INT],
+		WFC: [0, MAX_INT],
+		XLF: [0, MAX_INT]
 	}
 }
 
@@ -29,7 +31,7 @@ var updateFair = function(fairprice, book) {
 	}, 0);
 	lowestSell = sells.reduce(function(current, order) {
 		return Math.min(current, order[0]);
-	}, Number.MAX_SAFE_INTEGER);
+	}, MAX_INT);
 	fairprice.prices[symb] = [highestBuy, lowestSell];
 };
 
