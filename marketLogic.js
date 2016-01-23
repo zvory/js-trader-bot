@@ -4,6 +4,7 @@ var threshold = 2;
 
 var MarketLogic = function() {
 	var books = new Books();
+	var orders = new OurOrders();
 }
 
 MarketLogic.prototype.update = function(book) {
@@ -15,8 +16,9 @@ MarketLogic.prototype.update = function(book) {
 
 MarketLogic.prototype.getActions = function() {
 	for (type in types) {
-	//	if (getFairValue(type))
+		if () {
 
+		}
 	}
 }
 
