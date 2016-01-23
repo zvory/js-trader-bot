@@ -25,7 +25,7 @@ MarketLogic.prototype.getActions = function() {
         var fairValue = this.books.getFairValue(symb);
 
         if (highSell[0] - 1 > lowBuy[0]) {
-        	if (!(this.orders.filter(function(order) {
+        	if (!(this.orders.orders.filter(function(order) {
         		return order.symbol == symb && order.dir == "buy";
         	})))
         		actions.push (cm.buy(symb, highSell[0] - 1, 1));
