@@ -61,9 +61,7 @@ Books.prototype.getFairValue = function(type) {
 Books.prototype.getHighestBuys = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.buy.reduce(function(current, price) {
-			return Math.max(current, price);
-		}, 0);
+		return element.buy[0][0];
 	});
 	return typeBooks;
 }
@@ -71,11 +69,17 @@ Books.prototype.getHighestBuys = function(type) {
 Books.prototype.getLowestSells = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.buy.reduce(function(current, price) {
-			return Math.min(current, price);
-		}, MAX_INT);
+		return element.sell[0][0];
 	});
 	return typeBooks;
+}
+
+Books.prototype.getCurrHighestBuys = function(type) {
+	return this.getCurrBook(type).buy[0];
+}
+
+Books.prototype.getCurrLowestSell = function(type) {
+	return this.getCurrBook(type).sell[0];
 }
 
 // add, remove, confirm ()
