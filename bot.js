@@ -98,7 +98,6 @@ function makeBuyOrder (order) {
 
 function bot () {
 
-
     console.log(book.getPrices());
 
 }
