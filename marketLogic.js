@@ -1,3 +1,4 @@
+var cm = require("./createMessage");
 var MAX_INT = 2147483647;
 var types = ["BOND","VALBZ","VALE","GS","MS","WTC","XLF"];
 var threshold = 2;
@@ -15,11 +16,12 @@ MarketLogic.prototype.update = function(book) {
 }
 
 MarketLogic.prototype.getActions = function() {
-	for (type in types) {
-		if () {
-
-		}
+	var highSell = this.books.getCurrBook("BOND").sell[0];
+	if (highSell[0] <= 999) {
+		return [cm.buy("BOND", highSell[0], highSell[1]),
+		cm.sell("BOND", 1000, highSell[1])]
 	}
+	return [];
 }
 
 
