@@ -1,5 +1,5 @@
 var net = require('net');
-var logic = require('./marketLogic.js');
+var ml = require('./marketLogic.js');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
@@ -7,7 +7,7 @@ var HOST = 'test-exch-nerve';
 var PORT = 25000;
 
 
-var books = new bs.Books();
+var logic = new ml.marketLogic(); 
 var orders = new bs.OurOrders();
 
 client.connect(PORT, HOST, function() {
@@ -65,11 +65,11 @@ function handleData (data) {
     }
     // Book
     if (parsed.type.match(/book/i)) {
-        books.updateBook(parsed); 
+        logic.updateBook(parsed); 
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
-        orders.ack(parsed.order_id);
+        logic.orders.ack(parsed.order_id);
     }
     // Fill
     if (parsed.type.match(/fill/i)) {
@@ -91,13 +91,18 @@ client.on('close', function(data) {
 });
 
 
-function makeBuyOrder (order) {
-    orders.add(order);
+function sendRequest (order) {
     client.write(JSON.stringify(order) + "\n");
 }
 
-function bot () {
 
+
+
+function bot () {
+    //var actions = marketLogc.getActions();
+    //actions.forEach(function (action) {
+    //    sendRequest(action);
+    //});
 }
 
 setInterval(bot, 10);
