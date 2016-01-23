@@ -76,5 +76,3 @@ module.exports.convert = convert;
 module.exports.cancel = cancel;
 module.exports.sell = sell;
 module.exports.buy = buy;
-module.exports.Books = Books;
-

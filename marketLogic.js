@@ -22,3 +22,5 @@ Books.prototype.updateBook = function(book) {
 Books.prototype.getBook = function(type) {
 	return this.books[type];
 };
+
+module.exports.Books = Books;
