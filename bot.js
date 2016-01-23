@@ -15,6 +15,17 @@ net.createServer(function(sock) {
     
     // Add a 'data' event handler to this instance of socket
     sock.on('data', function(data) {
+        if (data.match(/hello/)){
+            console.log("Server handshake complete");
+            updatePositions(data);
+        }
+        if (data.match(/ERROR/i)) {
+            console.log("ERROR: " + data);
+        }
+        if (data.match(/REJECT/i)) {
+            console.log("Reject: " + data);
+        }
+        
         console.log("The exchange replied: " + data);
     });
 
@@ -24,6 +35,11 @@ net.createServer(function(sock) {
     });
     
 }).listen(PORT, HOST);
+
+
+function updatePositions (data){
+    console.log("got data, not handled");
+}
 
 
 console.log('bot listening to' + HOST +':'+ PORT);
