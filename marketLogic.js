@@ -20,25 +20,42 @@ MarketLogic.prototype.getActions = function() {
 }
 
 
+// stores an object containing an array of at most one hu ndread of the previous books for this type
 var Books = function() {
-	this.books ={
-		BOND:false,
-		VALBZ:false, 
-		VALE: false,
-		GS: false,
-		MS: false,
-		WFC: false,
-		XLF: false
+	this.books = {
+		BOND:[],
+		VALBZ:[], 
+		VALE: [],
+		GS: [],
+		MS: [],
+		WFC: [],
+		XLF: []
 	};
 };
 
 Books.prototype.updateBook = function(book) {
-	this.books[book.symbol] = book;
+	this.books[book.symbol].push(book);
+	if (this.books[book.symbol].length > 100)
+		this.books[book.symbol].shift();
 };
 
-Books.prototype.getBook = function(type) {
-	return this.books[type];
+Books.prototype.getCurrBook = function(type) {
+	return this.books[type][this.books[type].length-1];
 };
+
+Books.prototype.getFairValue = function(type) {
+	
+}
+
+Books.prototype.getHighestBuys = function(type) {
+	this.books[type].map(function(element) {
+
+	});
+}
+
+Books.prototype.getLowestSells = function(type) {
+	
+}
 
 // add, remove, confirm ()
 var OurOrders = function() {
