@@ -1,5 +1,5 @@
 var net = require('net');
-var ml = require('./marketLogic.js');
+var ml = require('./marketLogic');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
@@ -7,7 +7,7 @@ var HOST = 'test-exch-nerve';
 var PORT = 25000;
 
 
-var logic = new ml.marketLogic(); 
+var logic = new ml.MarketLogic(); 
 var orders = new ml.OurOrders();
 
 client.connect(PORT, HOST, function() {
@@ -32,7 +32,6 @@ client.on('data', function(data) {
 
 });
 
-//FIX THIS LATER
 function handleData (data) {
     var parsed = JSON.parse(data);
 
@@ -55,11 +54,11 @@ function handleData (data) {
     }
     // Open
     if (parsed.type.match(/open/i)) {
-
+        logic.open();
     }
     // Close
     if (parsed.type.match(/close/i)) {
-
+        logic.close();
     }
     // Book
     if (parsed.type.match(/book/i)) {
@@ -80,7 +79,7 @@ function handleData (data) {
 }
 
 	
-    // Add a 'close' event handler to this instance of socket
+// Add a 'close' event handler to this instance of socket
 client.on('close', function(data) {
     console.log(data);
     console.log('CLOSED: ' + client.remoteAddress +' '+ client.remotePort);
