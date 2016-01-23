@@ -8,7 +8,7 @@ var PORT = 25000;
 
 
 var logic = new ml.marketLogic(); 
-var orders = new bs.OurOrders();
+var orders = new ml.OurOrders();
 
 client.connect(PORT, HOST, function() {
 
@@ -17,8 +17,6 @@ client.connect(PORT, HOST, function() {
 
     var hello = {type:"hello", team:"NERVE"};
     client.write(JSON.stringify(hello) + "\n");
-
-
 });
 
 
@@ -69,7 +67,7 @@ function handleData (data) {
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
-        logic.orders.ack(parsed.order_id);
+        orders.ack(parsed.order_id);
     }
     // Fill
     if (parsed.type.match(/fill/i)) {
@@ -78,7 +76,6 @@ function handleData (data) {
     // Out
     if (parsed.type.match(/out/i)) {
         orders.out(parsed.order_id);
-
     }
 }
 
@@ -94,9 +91,6 @@ client.on('close', function(data) {
 function sendRequest (order) {
     client.write(JSON.stringify(order) + "\n");
 }
-
-
-
 
 function bot () {
     //var actions = marketLogc.getActions();
