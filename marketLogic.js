@@ -24,7 +24,7 @@ MarketLogic.prototype.getActions = function() {
         var lowBuy = this.books.getCurrBook(symb).buy[0];
         var fairValue = this.books.getFairValue(symb);
 
-        if (highSell[0] - 1 > lowBuy[0]) {
+        if (highSell[0] && lowBuy[0] && highSell[0] - 1 > lowBuy[0]) {
         	var buy= false;
         	var sell=false;
         	var ord = this.orders.orders;
