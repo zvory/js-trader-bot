@@ -89,10 +89,11 @@ function sendRequest (order) {
 }
 
 function bot () {
-    //var actions = marketLogc.getActions();
-    //actions.forEach(function (action) {
-    //    sendRequest(action);
-    //});
+    var actions = logic.getActions();
+    actions.forEach(function (action) {
+    sendRequest(action);
+    });
+    
 }
 
 setInterval(bot, 10);

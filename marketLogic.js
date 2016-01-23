@@ -17,12 +17,22 @@ MarketLogic.prototype.update = function(book) {
 }
 
 MarketLogic.prototype.getActions = function() {
-	var highSell = this.books.getCurrBook("BOND").sell[0];
-	if (highSell[0] <= 999) {
-		return [cm.buy("BOND", highSell[0], highSell[1]),
-				cm.sell("BOND", 1000, highSell[1])];
+    var actions = [];
+    var symb = types [3];
+	var highSell = this.books.getCurrBook(symb).sell[0];
+	var lowBuy = this.books.getCurrBook(symb).buy[0];
+
+	if (highSell && highSell[0] <= this.books.getFairValue(symb) + 1 ) {
+        console.log("buy");
+		actions.push (cm.buy(symb, highSell[0], highSell[1]));
 	}
-	return [];
+    else if (lowBuy && lowBuy[0] >= this.books.getFairValue(symb) + 1) 
+    {
+        console.log("sell");
+        actions.push(cm.sell(symb, lowBuy[0], lowBuy[1]));
+    }
+
+	return actions; 
 }
 
 
