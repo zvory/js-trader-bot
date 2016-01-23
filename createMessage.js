@@ -79,4 +79,4 @@ module.exports.Foo = Foo;
 module.exports.convert = convert;
 module.exports.cancel = cancel;
 module.exports.sell = sell;
-module.exports.buy = sell;
+module.exports.buy = buy;
