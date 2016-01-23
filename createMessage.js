@@ -8,6 +8,14 @@ var FairPrices = function() {
 	this.XLF = [0, Number.MAX_SAFE_INTEGER];
 }
 
+FairPrices.prototype.getPrices = function () {
+	var array = [];
+	for (var i in this) {
+		array.push({symbol: i, price: this[i]});
+	}
+	return array;
+}
+
 var updateFair = function(fairprice, book) {
 	var highestBuy = 0;
 	var lowestSell = 0;
