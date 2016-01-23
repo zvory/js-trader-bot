@@ -13,7 +13,7 @@ var FairPrices = function() {
 FairPrices.prototype.getPrices = function () {
 	var array = [];
 	for (var i in this.prices) {
-		array.push({symbol: i, price: this.price[i]});
+		array.push({symbol: i, price: this.prices[i]});
 	}
 	return array;
 }
