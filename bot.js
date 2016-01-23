@@ -53,11 +53,9 @@ function handleData (data) {
     }
     // Open
     if (parsed.type.match(/open/i)) {
-        logic.open();
     }
     // Close
     if (parsed.type.match(/close/i)) {
-        logic.close();
     }
     // Book
     if (parsed.type.match(/book/i)) {
