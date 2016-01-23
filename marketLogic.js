@@ -38,12 +38,14 @@ MarketLogic.prototype.getActions = function() {
 
         	}
         	if (!buy) {
-        		actions.push (cm.buy(symb, highSell[0] - 1, 1));
+        		actions.push (cm.buy(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb))
+        			, symb, highSell[0] - 1, 1));
         	}
         	else
         		console.log("can't buy");
         	if (!sell) {
-        		actions.push (cm.sell(symb, lowBuy[0] + 1, 1));
+        		actions.push (cm.sell(parseInt((new Date().getTime() + "").slice(6) + types.indexOf(symb)), 
+        			symb, lowBuy[0] + 1, 1));
         	}
         	else
         		console.log("can't sell");

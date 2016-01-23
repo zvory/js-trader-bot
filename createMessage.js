@@ -1,17 +1,17 @@
 var MAX_INT = 2147483647;
 
-var buy = function(symbol, price, size) {
+var buy = function(id, symbol, price, size) {
 	return new Foo("add", 
-		parseInt((new Date().getTime() + "").slice(5)), 
+		id, 
 		symbol.toUpperCase(), 
 		"BUY", 
 		price, 
 		size);
 }
 
-var sell = function(symbol, price, size) {
+var sell = function(id, symbol, price, size) {
 	return new Foo("add", 
-		parseInt((new Date().getTime() + "").slice(5)), 
+		id, 
 		symbol.toUpperCase(), 
 		"SELL", 
 		price, 
@@ -24,7 +24,7 @@ var cancel = function(orderId) {
 
 var convert = function(symbol, dir, size) {
 	return new Foo("convert", 
-		parseInt((new Date().getTime() + "").slice(5)), 
+		parseInt((new Date().getTime() + "").slice(6)), 
 		symbol.toUpperCase(), 
 		dir.toUpperCase(), 
 		"", 
