@@ -8,6 +8,7 @@ var PORT = 25000;
 
 
 var books = new bs.Books();
+var orders = new bs.OurOrders();
 
 client.connect(PORT, HOST, function() {
 
@@ -43,17 +44,16 @@ function handleData (data) {
     }
     // Error Handling
     if (parsed.type.match(/ERROR/i)) {
-        //console.log("ERROR: " + parsed.error);
+        console.log("ERROR: " + parsed.error);
     }
     // Order Rejection
     if (parsed.type.match(/REJECT/i)) {
-        //bs.orders.reject(parsed.order_id);
-        //console.log("Reject: " + matched.order_id + " " + parsed.error);
+        console.log("REJECTED" + parsed.error);
+        orders.out(parsed.order_id);
     }
     // Trade
     if (parsed.type.match(/trade/i)) {
         //console.log(parsed.type);
-
     }
     // Open
     if (parsed.type.match(/open/i)) {
@@ -65,19 +65,19 @@ function handleData (data) {
     }
     // Book
     if (parsed.type.match(/book/i)) {
-        //bs.updateBook(book, parsed); 
+        books.updateBook(parsed); 
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
-        //bs.orders.ack(parsed.order_id);
+        orders.ack(parsed.order_id);
     }
     // Fill
     if (parsed.type.match(/fill/i)) {
-        //bs.orders.fill(parsed.order_id, parsed.size);
+        orders.fill(parsed.order_id, parsed.size);
     }
     // Out
     if (parsed.type.match(/out/i)) {
-        //bs.order.out(parsed.order_id);
+        orders.out(parsed.order_id);
 
     }
 }
@@ -92,13 +92,16 @@ client.on('close', function(data) {
 
 
 function makeBuyOrder (order) {
-
-    client.write(order);
+    orders.add(order);
+    client.write(JSON.stringify(order) + "\n");
 }
 
+var bought = false;
 function bot () {
-
-
+    console.log(books);
+    if (!bought)
+        makeBuyOrder (bs.buy("BOND", 999, 1));
+    bought=true;
 }
 
 setInterval(bot, 10);
