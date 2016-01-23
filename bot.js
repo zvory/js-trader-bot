@@ -6,6 +6,8 @@ var HOST = 'test-exch-nerve';
 var PORT = 25000;
 
 
+var book = new bs.FairPrices();
+
 client.connect(PORT, HOST, function() {
 
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
@@ -67,6 +69,7 @@ function handleData (data) {
     // Book
     if (parsed.type.match(/book/i)) {
 
+
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
@@ -92,3 +95,8 @@ client.on('close', function(data) {
 
 
 
+function bot () {
+
+}
+
+setInterval(bot, 10);
