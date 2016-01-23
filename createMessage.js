@@ -90,7 +90,8 @@ OurOrders.prototype.ack = function(id) {
 
 OurOrders.prototype.add = function(foo) {
 	this.orders[foo.order_id] = [false, foo];
-}
+}}
+
 
 OurOrders.prototype.out = function(id) {
 	if(this.orders[id])
