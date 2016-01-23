@@ -1,9 +1,7 @@
 var net = require('net');
 
-var HOST = '127.0.0.1';
-var keksHOST = 'gordon-swirl-snort';
-var kekHOST = 'test-exch-NERVE';
-var PORT = 20000;
+var HOST = 'test-exch-NERVE';
+var PORT = 25000;
 // Create a server instance, and chain the listen function to it
 // The function passed to net.createServer() becomes the event handler for the 'connection' event
 // The sock object the callback function receives UNIQUE for each connection
@@ -37,7 +35,6 @@ net.createServer(function(sock) {
 
         if (parsed.type.match(/trade/i)) {
 
-
         }
         if (parsed.type.match(/open/i)) {
 
@@ -66,6 +63,7 @@ net.createServer(function(sock) {
         console.log("The exchange replied: " + data);
     });
 
+	
     // Add a 'close' event handler to this instance of socket
   sock.on('close', function(data) {
         console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
