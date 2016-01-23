@@ -1,12 +1,14 @@
+var MAX_INT = 2147483647;
+
 var FairPrices = function() {
 	this.prices = {
-		BOND: [0, -1],
-		VALBZ: [0, -1],
-		VALE: [0, -1],
-		GS: [0, -1],
-		MS: [0, -1],
-		WFC: [0, -1],
-		XLF: [0, -1]
+		BOND: [0, MAX_INT],
+		VALBZ: [0, MAX_INT],
+		VALE: [0, MAX_INT],
+		GS: [0, MAX_INT],
+		MS: [0, MAX_INT],
+		WFC: [0, MAX_INT],
+		XLF: [0, MAX_INT]
 	}
 }
 
@@ -29,11 +31,11 @@ var updateFair = function(fairprice, book) {
 	}, 0);
 	lowestSell = sells.reduce(function(current, order) {
 		return Math.min(current, order[0]);
-	}, Number.MAX_SAFE_INTEGER);
+	}, MAX_INT);
 	fairprice.prices[symb] = [highestBuy, lowestSell];
 };
 
-var buy = function(orderId, symbol, price, size) {
+var buy = function(symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -42,7 +44,7 @@ var buy = function(orderId, symbol, price, size) {
 		size);
 }
 
-var sell = function(orderId, symbol, price, size) {
+var sell = function(symbol, price, size) {
 	return new Foo("add", 
 		parseInt((new Date().getTime() + "").slice(5)), 
 		symbol.toUpperCase(), 
@@ -72,6 +74,22 @@ var Foo = function(type, orderId, symbol, dir, price, size) {
 	this.price = price;
 	this.size = size;
 }
+
+// add, remove, confirm ()
+var OurOrders = function() {
+	this.orders = []; // each element will be a tuple, with order object, and livestate
+}
+
+OurOrders.prototype.ack = function(id) {
+
+}
+
+OurOrders.prototype.add
+
+
+
+
+
 
 module.exports.FairPrices = FairPrices;
 module.exports.updateFair = updateFair;
