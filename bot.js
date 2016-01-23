@@ -7,7 +7,7 @@ var HOST = 'test-exch-nerve';
 var PORT = 25000;
 
 
-var book = new bs.FairPrices();
+var books = new bs.Books();
 
 client.connect(PORT, HOST, function() {
 
@@ -98,7 +98,6 @@ function makeBuyOrder (order) {
 
 function bot () {
 
-    console.log(book.getPrices());
 
 }
 
