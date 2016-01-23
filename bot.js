@@ -2,8 +2,8 @@ var net = require('net');
 //var bs = require('buysell.js');
 
 var client = new net.Socket();
-var HOST = 'test-exch-NERVE';
-var PORT = 20000;
+var HOST = 'test-exch-nerve';
+var PORT = 25000;
 
 
 client.connect(PORT, HOST, function() {
@@ -11,11 +11,8 @@ client.connect(PORT, HOST, function() {
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
 
-console.log(client.address());
-    client.write('HELLO NERVE');
-
-    client.write('{"type": "hello", "team": "NERVE"}');
-    console.log('{"type": "hello", "team": "NERVE"}');
+    var hello = {type:"hello", team:"NERVE"};
+    client.write(JSON.stringify(hello) + "\n");
 
 
 });
@@ -23,26 +20,38 @@ console.log(client.address());
 
 // Add a 'data' event handler to this instance of socket
 client.on('data', function(data) {
-    
-    console.log("msg" + data);
+    var stringed = data.toString();
+    var strings = stringed.split("\n");
+
+    strings.forEach(function (entry) {
+        handleData(entry);
+    });
+
+});
+
+//DUMMY FUNCTION
+function handleData(data){
+    console.log(data);
+}
+//FIX THIS LATER
+function _handleData (data) {
     var parsed = JSON.parse(data);
 
     // Initial Handshake
     if (parsed.type.match(/hello/i)) {
         console.log ("Server handshake complete");
-
     }
     // Error Handling
     if (parsed.type.match(/ERROR/i)) {
-        console.log("ERROR: " + parsed.error);
+        //console.log("ERROR: " + parsed.error);
     }
     // Order Rejection
     if (parsed.type.match(/REJECT/i)) {
-        console.log("Reject: " + matched.order_id + " " + parsed.error);
+        //console.log("Reject: " + matched.order_id + " " + parsed.error);
     }
     // Trade
     if (parsed.type.match(/trade/i)) {
-        console.log(parsed.type);
+        //console.log(parsed.type);
 
     }
     // Open
@@ -69,10 +78,8 @@ client.on('data', function(data) {
     if (parsed.type.match(/out/i)) {
 
     }
-    
-    console.log("The exchange replied: " + data);
-});
 
+}
 
 	
     // Add a 'close' event handler to this instance of socket
