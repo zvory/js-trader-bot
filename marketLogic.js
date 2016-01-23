@@ -29,11 +29,11 @@ MarketLogic.prototype.getActions = function() {
         	var sell=false;
         	var ord = this.orders.orders;
         	for (var i in this.orders.orders){
-        		if (ord.hasOwnProperty(i) && ord[i].symbol == symb){
-        		 	if (ord[i].dir == "buy")
+        		if (ord.hasOwnProperty(i) && ord[i][1].symbol == symb){
+        		 	if (ord[i][1].dir == "buy")
         				buy = true;
         			else 
-        				sell = false;
+        				sell = true;
         		}
 
         	}
