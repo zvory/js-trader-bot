@@ -1,14 +1,23 @@
-
+var types = ["BOND","VALBZ","VALE","GS","MS","WTC","XLF"];
+var threshold = 2;
 
 var MarketLogic = function() {
 	var books = new Books();
 }
 
 MarketLogic.prototype.update = function(book) {
+	// logic for moving average
+
+	//
 	this.books.updateBook(book);
 }
 
-MarketLogic.prototype.decision
+MarketLogic.prototype.getActions = function() {
+	for (type in types) {
+	//	if (getFairValue(type))
+
+	}
+}
 
 
 var Books = function() {
@@ -34,7 +43,6 @@ Books.prototype.getBook = function(type) {
 // add, remove, confirm ()
 var OurOrders = function() {
 	this.orders = {
-
 	}; // each element will be a tuple, with order object, and livestate
 } 
 
