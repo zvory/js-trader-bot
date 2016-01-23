@@ -1,5 +1,5 @@
 var net = require('net');
-//var bs = require('buysell.js');
+var bs = require('./createMessage');
 
 var client = new net.Socket();
 var HOST = 'test-exch-nerve';
@@ -24,18 +24,20 @@ client.on('data', function(data) {
     var strings = stringed.split("\n");
 
     strings.forEach(function (entry) {
-        handleData(entry);
+        if (entry)
+            handleData(entry);
     });
 
 });
 
 //DUMMY FUNCTION
-function handleData(data){
+function _handleData(data){
     console.log(data);
 }
 //FIX THIS LATER
-function _handleData (data) {
+function handleData (data) {
     var parsed = JSON.parse(data);
+    console.log(parsed);
 
     // Initial Handshake
     if (parsed.type.match(/hello/i)) {
@@ -78,7 +80,6 @@ function _handleData (data) {
     if (parsed.type.match(/out/i)) {
 
     }
-
 }
 
 	
@@ -88,4 +89,6 @@ client.on('close', function(data) {
     console.log('CLOSED: ' + client.remoteAddress +' '+ client.remotePort);
 
 });
-    
+
+
+
