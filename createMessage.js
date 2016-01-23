@@ -1,17 +1,19 @@
 var FairPrices = function() {
-	this.BOND = [0, Number.MAX_SAFE_INTEGER];
-	this.VALBZ = [0, Number.MAX_SAFE_INTEGER];
-	this.VALE = [0, Number.MAX_SAFE_INTEGER];
-	this.GS = [0, Number.MAX_SAFE_INTEGER];
-	this.MS = [0, Number.MAX_SAFE_INTEGER];
-	this.WFC = [0, Number.MAX_SAFE_INTEGER];
-	this.XLF = [0, -1];
+	this.prices = {
+		BOND: [0, -1],
+		VALBZ: [0, -1],
+		VALE: [0, -1],
+		GS: [0, -1],
+		MS: [0, -1],
+		WFC: [0, -1],
+		XLF: [0, -1]
+	}
 }
 
 FairPrices.prototype.getPrices = function () {
 	var array = [];
-	for (var i in this) {
-		array.push({symbol: i, price: this[i]});
+	for (var i in this.prices) {
+		array.push({symbol: i, price: this.price[i]});
 	}
 	return array;
 }
@@ -28,7 +30,7 @@ var updateFair = function(fairprice, book) {
 	lowestSell = sells.reduce(function(current, order) {
 		return Math.min(current, order[0]);
 	}, Number.MAX_SAFE_INTEGER);
-	fairprice[symb] = [highestBuy, lowestSell];
+	fairprice.prices[symb] = [highestBuy, lowestSell];
 };
 
 var buy = function(orderId, symbol, price, size) {
