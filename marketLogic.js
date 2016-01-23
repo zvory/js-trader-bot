@@ -1,9 +1,11 @@
+var cm = require("./createMessage");
 var MAX_INT = 2147483647;
 var types = ["BOND","VALBZ","VALE","GS","MS","WTC","XLF"];
 var threshold = 2;
 
 var MarketLogic = function() {
 	var books = new Books();
+	var orders = new OurOrders();
 }
 
 MarketLogic.prototype.update = function(book) {
@@ -14,10 +16,12 @@ MarketLogic.prototype.update = function(book) {
 }
 
 MarketLogic.prototype.getActions = function() {
-	for (type in types) {
-	//	if (getFairValue(type))
-
+	var highSell = this.books.getCurrBook("BOND").sell[0];
+	if (highSell[0] <= 999) {
+		return [cm.buy("BOND", highSell[0], highSell[1]),
+		cm.sell("BOND", 1000, highSell[1])]
 	}
+	return [];
 }
 
 
@@ -61,9 +65,7 @@ Books.prototype.getFairValue = function(type) {
 Books.prototype.getHighestBuys = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.buy.reduce(function(current, price) {
-			return Math.max(current, price);
-		}, 0);
+		return element.buy[0][0];
 	});
 	return typeBooks;
 }
@@ -71,11 +73,17 @@ Books.prototype.getHighestBuys = function(type) {
 Books.prototype.getLowestSells = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.buy.reduce(function(current, price) {
-			return Math.min(current, price);
-		}, MAX_INT);
+		return element.sell[0][0];
 	});
 	return typeBooks;
+}
+
+Books.prototype.getCurrHighestBuys = function(type) {
+	return this.getCurrBook(type).buy[0];
+}
+
+Books.prototype.getCurrLowestSell = function(type) {
+	return this.getCurrBook(type).sell[0];
 }
 
 // add, remove, confirm ()
