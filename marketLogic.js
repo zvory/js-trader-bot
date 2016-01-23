@@ -39,7 +39,7 @@ MarketLogic.prototype.getActions = function() {
         	}
         	if (!buy) {
                 var purchase = cm.buy(Math.floor (Math.random() * MAX_INT)
-        			, symb, highSell[0] - 1, 1);
+        			, symb, lowBuy[0] + 1, 1);
                 console.log(purchase);
         		actions.push (purchase);
                 this.orders.add(purchase);
@@ -48,7 +48,7 @@ MarketLogic.prototype.getActions = function() {
         		console.log("can't buy");
         	if (!sell) {
                 var sale = cm.sell(Math.floor (Math.random() * MAX_INT), 
-        			symb, lowBuy[0] + 1, 1);
+        			symb, highSell[0] - 1, 1);
         		actions.push (sale);
                 this.orders.add(sale);
         	}
