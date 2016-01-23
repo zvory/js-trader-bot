@@ -1,5 +1,5 @@
 var net = require('net');
-
+var logic = require('./marketLogic.js');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
@@ -96,12 +96,8 @@ function makeBuyOrder (order) {
     client.write(JSON.stringify(order) + "\n");
 }
 
-var bought = false;
 function bot () {
-    console.log(books);
-    if (!bought)
-        makeBuyOrder (bs.buy("BOND", 999, 1));
-    bought=true;
+
 }
 
 setInterval(bot, 10);
