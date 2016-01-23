@@ -1,4 +1,5 @@
 var net = require('net');
+
 var bs = require('./createMessage');
 
 var client = new net.Socket();
@@ -46,6 +47,7 @@ function handleData (data) {
     }
     // Order Rejection
     if (parsed.type.match(/REJECT/i)) {
+        //bs.orders.reject(parsed.order_id);
         //console.log("Reject: " + matched.order_id + " " + parsed.error);
     }
     // Trade
@@ -67,14 +69,15 @@ function handleData (data) {
     }
     // Ack 
     if (parsed.type.match(/ack/i)) {
-
+        //bs.orders.ack(parsed.order_id);
     }
     // Fill
     if (parsed.type.match(/fill/i)) {
-
+        //bs.orders.fill(parsed.order_id, parsed.size);
     }
     // Out
     if (parsed.type.match(/out/i)) {
+        //bs.order.out(parsed.order_id);
 
     }
 }
@@ -88,8 +91,14 @@ client.on('close', function(data) {
 });
 
 
+function makeBuyOrder (order) {
+
+    client.write(order);
+}
 
 function bot () {
+
+
     console.log(book.getPrices());
 
 }
