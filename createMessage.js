@@ -1,15 +1,23 @@
 var MAX_INT = 2147483647;
 
-var FairPrices = function() {
-	this.prices = {
-		BOND: [0, MAX_INT],
-		VALBZ: [0, MAX_INT],
-		VALE: [0, MAX_INT],
-		GS: [0, MAX_INT],
-		MS: [0, MAX_INT],
-		WFC: [0, MAX_INT],
-		XLF: [0, MAX_INT]
+var Books = function() {
+	this.books  {
+		BOND: "bond undefined",
+		VALBZ: "valbz",
+		VALE: false,
+		GS: false,
+		MS: false,
+		WFC: false,
+		XLF: false
 	}
+}
+
+Books.prototype.updateBook = function(book) {
+	this.books[book.type] = book;
+}
+
+Books.prototype.getBook = function(type) {
+	return this.books[type];
 }
 
 FairPrices.prototype.getPrices = function () {
