@@ -19,7 +19,7 @@ MarketLogic.prototype.getActions = function() {
 	var highSell = this.books.getCurrBook("BOND").sell[0];
 	if (highSell[0] <= 999) {
 		return [cm.buy("BOND", highSell[0], highSell[1]),
-		cm.sell("BOND", 1000, highSell[1])]
+		cm.sell("BOND", 1000, highSell[1])];
 	}
 	return [];
 }
