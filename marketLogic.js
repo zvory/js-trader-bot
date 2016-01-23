@@ -64,19 +64,23 @@ Books.prototype.getFairValue = function(type) {
 	var lowestSells = this.getLowestSells(type);
 	var totalBuy = 0;
 	var totalSell = 0;
-	highestBuys.forEach(function(highest) {
-		totalBuy += highest;
-	});
-	lowestSells.forEach(function(lowest) {
-		totalSell += lowest;
-	});
-	return (totalBuy + totalSell)/(2 * highestBuys.length);
+	var counter = 0;
+	for (var i = 0; i < highestBuys.length; i++) {
+		if (highestBuys[i] != -1 && lowestSells != -1) {
+			totalBuy += highestBuys[i];
+			totalSell += lowestSells[i];
+			counter ++;
+		}
+	}
+	return (totalBuy + totalSell) / (2 * counter);
 }
 
 Books.prototype.getHighestBuys = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.buy[0][0];
+		if (element.buy[0])
+			return element.buy[0][0];
+		return -1;
 	});
 	return typeBooks;
 }
@@ -84,7 +88,10 @@ Books.prototype.getHighestBuys = function(type) {
 Books.prototype.getLowestSells = function(type) {
 	var typeBooks = this.books[type];
 	typeBooks = typeBooks.map(function(element) {
-		return element.sell[0][0];
+		if (element.sell[0])
+			return element.sell[0][0];
+		else
+			return -1;
 	});
 	return typeBooks;
 }
