@@ -68,9 +68,9 @@ var OurOrders = function() {
 	}; // each element will be a tuple, with order object, and livestate
 } 
 
-OurOrders.prototype.ack = function(id) {
+	OurOrders.prototype.ack = function(id) {
 	if(this.orders[id])
-		this.orders[id] = [true, this.orders[id][1]];
+		this.orders[id][0] = true;
 }
 
 OurOrders.prototype.add = function(foo) {
