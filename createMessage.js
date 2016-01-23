@@ -15,11 +15,11 @@ var updateFair = function(fairprice, book) {
 	var sells = book.sell;
 	var symb = book.symbol;
 	highestBuy = buys.reduce(function(current, order) {
-		return Math.max(current, order[]);
-	}, 0;
+		return Math.max(current, order[0]);
+	}, 0);
 	lowestSell = sells.reduce(function(current, order) {
 		return Math.min(current, order[0]);
-	}, Number.MAX_SAFE_INTEGER));
+	}, Number.MAX_SAFE_INTEGER);
 	fairprice[symb] = [highestBuy, lowestSell];
 };
 
