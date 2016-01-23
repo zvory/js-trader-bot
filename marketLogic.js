@@ -4,8 +4,8 @@ var types = ["BOND","VALBZ","VALE","GS","MS","WTC","XLF"];
 var threshold = 2;
 
 var MarketLogic = function() {
-	var books = new Books();
-	var orders = new OurOrders();
+	this.books = new Books();
+	this.orders = new OurOrders();
 
 	var open = function() {return true};
 	var close = function() {return true};
@@ -13,8 +13,6 @@ var MarketLogic = function() {
 
 MarketLogic.prototype.update = function(book) {
 	// logic for moving average
-
-	//
 	this.books.updateBook(book);
 }
 
