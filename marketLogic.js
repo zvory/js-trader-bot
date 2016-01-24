@@ -45,24 +45,24 @@ MarketLogic.prototype.getActions = function() {
         var fairValue = this.books.getFairValue(symb);
         var lastday = this.books.getLastBook(symb);
        	if (lastday && lastday["buy"] && lastday["sell"] && lastday["buy"][0] && lastday["sell"][0])
-        var lastdayav = (lastday["buy"][0][1] + lastday["sell"][0][1]) / 2;
-    else
-    	var lastdayav = -1;
+	        var lastdayav = (lastday["buy"][0][1] + lastday["sell"][0][1]) / 2;
+	    else
+	    	var lastdayav = -1;	
         var currday = this.books.getCurrBook(symb);
         if (currday && currday["buy"] && currday["sell"] && currday["buy"][0] && currday["sell"][0])
-        var currdayav = (currday["buy"][0][1] + currday["sell"][0][1]) / 2;
-    else
-    	var currdayav = -1;
+	        var currdayav = (currday["buy"][0][1] + currday["sell"][0][1]) / 2;
+	    else
+	    	var currdayav = -1;
 
 
         if (fivedays < thirtydays) {
         	if (currdayav < lastdayav) {
-        		actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 1, 1));
+        		actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 10, 1));
         	}
         }
         else {
         	if (currdayav > lastdayav) {
-        		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 1, 1))
+        		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 10, 1))
         	}
         }
 
