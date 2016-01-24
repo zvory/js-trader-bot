@@ -44,12 +44,12 @@ MarketLogic.prototype.getActions = function() {
         var thirtydays = this.books.getAverage(30, symb);
         var fairValue = this.books.getFairValue(symb);
         var lastday = this.books.getLastBook(symb);
-       	if (lastday)
+       	if (lastday && lastday["buy"] && lastday["sell"] && lastday["buy"][0] && lastday["sell"][0])
         var lastdayav = (lastday["buy"][0][1] + lastday["sell"][0][1]) / 2;
     else
     	var lastdayav = -1;
         var currday = this.books.getCurrBook(symb);
-        if (currday)
+        if (currday && currday["buy"] && currday["sell"] && currday["buy"][0] && currday["sell"][0])
         var currdayav = (currday["buy"][0][1] + currday["sell"][0][1]) / 2;
     else
     	var currdayav = -1;
