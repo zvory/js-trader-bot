@@ -71,6 +71,7 @@ function handleData (data) {
     // Fill
     if (parsed.type.match(/fill/i)) {
         logic.orders.fill(parsed.order_id, parsed.size);
+        logic.assets.updateAssets(parsed.symbol, parsed.dir, parsed.size);
     }
     // Out
     if (parsed.type.match(/out/i)) {

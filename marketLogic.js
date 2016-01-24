@@ -13,10 +13,18 @@ var MarketLogic = function() {
 }
 
 var Assets = function () {
+    this.assets = {};
+    for (var tag in types)
+        this.assets[types[tag]] = 0;
+}
 
-
-
-
+Assets.prototype.updateAssets =  function (symbol, dir, size){
+    var sign;
+    if (dir == "BUY")
+        sign = 1;
+    else
+        sign = -1;
+    this.assets[symbol] +=Number(size) * sign;
 }
 
 MarketLogic.prototype.update = function(book) {
@@ -31,6 +39,9 @@ MarketLogic.prototype.getActions = function() {
 
         var highSell = this.books.getCurrBook(symb).sell[0];
         var lowBuy = this.books.getCurrBook(symb).buy[0];
+
+        var avg = (highSell[0] + lowBuy[0]) - 1;
+
         var fairValue = this.books.getFairValue(symb);
 
         if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0]  - 1> lowBuy[0]) {
@@ -40,7 +51,6 @@ MarketLogic.prototype.getActions = function() {
             var time = new Date().getTime();
         	for (var i in this.orders.orders){
         		if (ord.hasOwnProperty(i) && ord[i][1].symbol == symb){
-                    console.log(ord[i][1].order_id);
                     actions.push ({type:"cancel", order_id:ord[i][1].order_id});
                     this.orders.out(ord[i][1].order_id);
         		}
@@ -54,7 +64,7 @@ MarketLogic.prototype.getActions = function() {
         	}
         	if (true) {
                 var sale = cm.sell(Math.floor (Math.random() * MAX_INT),
-        			symb, highSell[0]-1 , 1);
+        			symb, highSell[0] , 1);
         		actions.push (sale);
                 this.orders.add(sale);
         	}
@@ -94,6 +104,9 @@ Books.prototype.updateBook = function(book) {
 
 Books.prototype.getCurrBook = function(type) {
 	return this.books[type][this.books[type].length-1];
+};
+Books.prototype.getLastBook = function(type) {
+	return this.books[type][this.books[type].length-2];
 };
 
 Books.prototype.getFairValue = function(type) {
@@ -165,6 +178,7 @@ OurOrders.prototype.out = function(id) {
 OurOrders.prototype.fill = function(id, size) {
 	if(this.orders[id])
 		this.orders[id][1].size -= size;
+
 }
 
 
