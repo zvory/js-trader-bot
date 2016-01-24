@@ -19,7 +19,7 @@ var sell = function(id, symbol, price, size) {
 }
 
 var cancel = function(orderId) {
-	return new Foo("cancel", orderId);
+	return {type:"cancel", order_id:orderId};
 }
 
 var convert = function(symbol, dir, size) {

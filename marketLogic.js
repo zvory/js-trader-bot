@@ -6,16 +6,23 @@ var threshold = 2;
 var MarketLogic = function() {
 	this.books = new Books();
 	this.orders = new OurOrders();
+    this.assets = new Assets();
 
 	var open = function() {return true};
 	var close = function() {return true};
+}
+
+var Assets = function () {
+
+
+
+
 }
 
 MarketLogic.prototype.update = function(book) {
 	// logic for moving average
 	this.books.updateBook(book);
 }
-
 MarketLogic.prototype.getActions = function() {
     var actions = [];
 
@@ -26,50 +33,40 @@ MarketLogic.prototype.getActions = function() {
         var lowBuy = this.books.getCurrBook(symb).buy[0];
         var fairValue = this.books.getFairValue(symb);
 
-        /*
-        if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0] - 2 > lowBuy[0]) {
+        if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0]  - 1> lowBuy[0]) {
         	var buy= false;
         	var sell=false;
         	var ord = this.orders.orders;
             var time = new Date().getTime();
         	for (var i in this.orders.orders){
         		if (ord.hasOwnProperty(i) && ord[i][1].symbol == symb){
-                    if (ord[i][2] + 1000 < time){
-                        actions.push (cm.cancel(ord[i][1].order_id));
-                        this.orders.out(ord[i][1].order_id);
-                    }
-                    else{
-                    console.log(ord[i][1]);
-        		 	if (ord[i][1].dir == "buy")
-        				buy = true;
-        			else 
-        				sell = true;
-                    }
+                    console.log(ord[i][1].order_id);
+                    actions.push ({type:"cancel", order_id:ord[i][1].order_id});
+                    this.orders.out(ord[i][1].order_id);
         		}
 
         	}
-        	if (!buy) {
+        	if (true) {
                 var purchase = cm.buy(Math.floor (Math.random() * MAX_INT)
-        			, symb, lowBuy[0] + 1, 1);
-                console.log(purchase);
+        			, symb, lowBuy[0] , 1);
         		actions.push (purchase);
                 this.orders.add(purchase);
         	}
-        	if (!sell) {
-                var sale = cm.sell(Math.floor (Math.random() * MAX_INT), 
-        			symb, highSell[0] - 1, 1);
+        	if (true) {
+                var sale = cm.sell(Math.floor (Math.random() * MAX_INT),
+        			symb, highSell[0]-1 , 1);
         		actions.push (sale);
                 this.orders.add(sale);
         	}
-        }*/
+        }/*
         if (highSell && highSell[0] <= fairValue - 1){
             console.log("buy");
-            actions.push (cm.buy(symb, highSell[0] +1, 1));
+            actions.push (cm.buy(Math.floor (Math.random() *MAX_INT),symb, highSell[0] +1, 1));
         }
         else if (lowBuy && lowBuy[0] >= fairValue + 1){ 
             console.log("sell");
-            actions.push(cm.sell(symb, lowBuy[0] -1, 1));
-        }
+            actions.push(cm.sell(Math.floor (Math.random() * MAX_INT),symb, lowBuy[0] -1, 1));
+        }*/
     }.bind(this));
 
 	return actions; 
@@ -156,13 +153,13 @@ var OurOrders = function() {
 }
 
 OurOrders.prototype.add = function(foo) {
-	this.orders[foo.order_id] = [false, foo, new Date()];
+	this.orders[foo.order_id] = [false, foo, new Date().getTime()];
 }
 
 
 OurOrders.prototype.out = function(id) {
-	if(this.orders[id])
-		delete this.orders[id];
+    if (this.orders[id])
+        delete this.orders[id];
 }
 
 OurOrders.prototype.fill = function(id, size) {
