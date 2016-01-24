@@ -3,7 +3,7 @@ var ml = require('./marketLogic');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
-var HOST = 'production';
+var HOST = 'test-exch-nerve';
 var PORT = 25000;
 
 
@@ -44,7 +44,6 @@ function handleData (data) {
     }
     // Order Rejection
     if (parsed.type.match(/REJECT/i)) {
-        console.log("REJECTED" + parsed.error);
         logic.orders.out(parsed.order_id);
     }
     // Trade

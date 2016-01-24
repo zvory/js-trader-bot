@@ -19,21 +19,32 @@ MarketLogic.prototype.update = function(book) {
 MarketLogic.prototype.getActions = function() {
     var actions = [];
 
+
     types.forEach(function (symb) {
+
         var highSell = this.books.getCurrBook(symb).sell[0];
         var lowBuy = this.books.getCurrBook(symb).buy[0];
         var fairValue = this.books.getFairValue(symb);
 
+        /*
         if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0] - 2 > lowBuy[0]) {
         	var buy= false;
         	var sell=false;
         	var ord = this.orders.orders;
+            var time = new Date().getTime();
         	for (var i in this.orders.orders){
         		if (ord.hasOwnProperty(i) && ord[i][1].symbol == symb){
+                    if (ord[i][2] + 1000 < time){
+                        actions.push (cm.cancel(ord[i][1].order_id));
+                        this.orders.out(ord[i][1].order_id);
+                    }
+                    else{
+                    console.log(ord[i][1]);
         		 	if (ord[i][1].dir == "buy")
         				buy = true;
         			else 
         				sell = true;
+                    }
         		}
 
         	}
@@ -44,18 +55,13 @@ MarketLogic.prototype.getActions = function() {
         		actions.push (purchase);
                 this.orders.add(purchase);
         	}
-        	else
-        		console.log("can't buy");
         	if (!sell) {
                 var sale = cm.sell(Math.floor (Math.random() * MAX_INT), 
         			symb, highSell[0] - 1, 1);
         		actions.push (sale);
                 this.orders.add(sale);
         	}
-        	else
-        		console.log("can't sell");
-        }
-        /*
+        }*/
         if (highSell && highSell[0] <= fairValue - 1){
             console.log("buy");
             actions.push (cm.buy(symb, highSell[0] +1, 1));
@@ -63,7 +69,7 @@ MarketLogic.prototype.getActions = function() {
         else if (lowBuy && lowBuy[0] >= fairValue + 1){ 
             console.log("sell");
             actions.push(cm.sell(symb, lowBuy[0] -1, 1));
-        }*/
+        }
     }.bind(this));
 
 	return actions; 
@@ -150,7 +156,7 @@ var OurOrders = function() {
 }
 
 OurOrders.prototype.add = function(foo) {
-	this.orders[foo.order_id] = [false, foo];
+	this.orders[foo.order_id] = [false, foo, new Date()];
 }
 
 
