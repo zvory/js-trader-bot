@@ -43,12 +43,21 @@ MarketLogic.prototype.getActions = function() {
         var fivedays = this.books.getAverage(5, symb);
         var thirtydays = this.books.getAverage(30, symb);
         var fairValue = this.books.getFairValue(symb);
+        var lastday = this.books.getLastBook(symb);
+        var lastdayav = (lastday["buy"][0][1] + lastday["sell"][0][1]) / 2;
+        var currday = this.books.getCurrBook(symb);
+        var currdayav = (currday["buy"][0][1] + currday["sell"][0][1]) / 2;
 
-        if (fivedays > thirtydays) {
-        	actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 1, 1));
+
+        if (fivedays < thirtydays) {
+        	if (currdayav < lastdayav) {
+        		actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 1, 1));
+        	}
         }
         else {
-        	actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 1, 1))
+        	if (currdayav > lastdayav) {
+        		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 1, 1))
+        	}
         }
 
 
@@ -121,7 +130,10 @@ Books.prototype.getCurrBook = function(type) {
 	return this.books[type][this.books[type].length-1];
 };
 Books.prototype.getLastBook = function(type) {
+	if (this.books[type].length-2 >= 0)
 	return this.books[type][this.books[type].length-2];
+	else
+		return -1;
 };
 
 Books.prototype.getFairValue = function(type) {
