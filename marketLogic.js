@@ -80,12 +80,14 @@ MarketLogic.prototype.getActions = function() {
 
         	}
         	if (true) {
+                console.log("making purchase");
                 var purchase = cm.buy(Math.floor (Math.random() * MAX_INT)
         			, symb, lowBuy[0] , 1);
         		actions.push (purchase);
                 this.orders.add(purchase);
         	}
         	if (true) {
+                console.log("making sale");
                 var sale = cm.sell(Math.floor (Math.random() * MAX_INT),
         			symb, highSell[0] , 1);
         		actions.push (sale);

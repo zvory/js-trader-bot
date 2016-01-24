@@ -3,7 +3,7 @@ var ml = require('./marketLogic');
 var bs = require('./createMessage');
 
 var client = new net.Socket();
-var HOST = 'test-exch-nerve';
+var HOST = 'production';
 var PORT = 25000;
 
 
