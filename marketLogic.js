@@ -57,11 +57,15 @@ MarketLogic.prototype.getActions = function() {
 
         if (fivedays < thirtydays) {
         	if (currdayav < lastdayav) {
+
+                console.log("SEL: " + symb);
         		actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 10, 1));
         	}
         }
         else {
         	if (currdayav > lastdayav) {
+
+                console.log("BUY: " + symb);
         		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 10, 1))
         	}
         }
@@ -80,7 +84,6 @@ MarketLogic.prototype.getActions = function() {
 
         	}
         	if (true) {
-                console.log("making purchase");
                 var purchase = cm.buy(Math.floor (Math.random() * MAX_INT)
         			, symb, lowBuy[0] , 1);
         		actions.push (purchase);

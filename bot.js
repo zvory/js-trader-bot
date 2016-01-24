@@ -100,4 +100,4 @@ function bot () {
     
 }
 
-var botreset = setInterval(bot, 50);
+var botreset = setInterval(bot, 10);
