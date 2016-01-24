@@ -40,11 +40,19 @@ MarketLogic.prototype.getActions = function() {
         var highSell = this.books.getCurrBook(symb).sell[0];
         var lowBuy = this.books.getCurrBook(symb).buy[0];
 
-        var avg = (highSell[0] + lowBuy[0]) - 1;
-
+        var fivedays = this.books.getAverage(5, symb);
+        var thirtydays = this.books.getAverage(30, symb);
         var fairValue = this.books.getFairValue(symb);
 
-        if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0]  - 1> lowBuy[0]) {
+        if (fivedays > thirtydays) {
+        	actions.push(cm.sell(Math.floor (Math.random() * MAX_INT), symb, fivedays + 1, 1));
+        }
+        else {
+        	actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 1, 1))
+        }
+
+
+        /*if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0]  - 1> lowBuy[0]) {
         	var buy= false;
         	var sell=false;
         	var ord = this.orders.orders;
@@ -68,15 +76,8 @@ MarketLogic.prototype.getActions = function() {
         		actions.push (sale);
                 this.orders.add(sale);
         	}
-        }/*
-        if (highSell && highSell[0] <= fairValue - 1){
-            console.log("buy");
-            actions.push (cm.buy(Math.floor (Math.random() *MAX_INT),symb, highSell[0] +1, 1));
-        }
-        else if (lowBuy && lowBuy[0] >= fairValue + 1){ 
-            console.log("sell");
-            actions.push(cm.sell(Math.floor (Math.random() * MAX_INT),symb, lowBuy[0] -1, 1));
         }*/
+       
     }.bind(this));
 
 	return actions; 
@@ -95,6 +96,20 @@ var Books = function() {
 		XLF: []
 	};
 };
+
+Books.prototype.getAverage = function(days, type) {
+	var counter = 0;
+	var counter2 = 0;
+	var lowest = this.getLowestSells(type);
+	var highest = this.getHighestBuys(type);
+	for (var i = this.books[type].length-days; i < this.books[type].length; i++) {
+		if (i >= 0 && lowest[i] != -1 && highest[i] != -1) {
+			counter2 += lowest[i] + highest[i];
+			counter ++;
+		}
+	}
+	return Math.round(counter2/(2 * counter));
+}
 
 Books.prototype.updateBook = function(book) {
 	this.books[book.symbol].push(book);
@@ -166,7 +181,7 @@ var OurOrders = function() {
 }
 
 OurOrders.prototype.add = function(foo) {
-	this.orders[foo.order_id] = [false, foo, new Date().getTime()];
+	this.orders[foo.order_id] = [false, foo];
 }
 
 
