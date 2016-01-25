@@ -9,7 +9,7 @@ This algorithm produced consistent results netting positive profit to loss ratio
 
 
 ##### File Breakdown
-__bot.js__ handled networking and would execute the decisions given to it based on analysis in marketlog.js.
+__networking.js__ handled networking and would execute the decisions given to it based on analysis in marketlog.js.
 
 __marketLogic.js__ handles the decision making process and contains the trading algorithm.
 

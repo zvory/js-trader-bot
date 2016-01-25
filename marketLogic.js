@@ -7,16 +7,15 @@ var MarketLogic = function() {
 	this.books = new Books();
 	this.orders = new OurOrders();
     this.assets = new Assets();
-
-	var open = function() {return true};
-	var close = function() {return true};
-}
+};
 
 var Assets = function () {
     this.assets = {};
     for (var tag in types)
         this.assets[types[tag]] = 0;
-}
+};
+
+
 
 Assets.prototype.updateAssets =  function (symbol, dir, size){
     var sign;
@@ -25,12 +24,10 @@ Assets.prototype.updateAssets =  function (symbol, dir, size){
     else
         sign = -1;
     this.assets[symbol] +=Number(size) * sign;
-}
-
 MarketLogic.prototype.update = function(book) {
 	// logic for moving average
 	this.books.updateBook(book);
-}
+};
 MarketLogic.prototype.getActions = function() {
     var actions = [];
 
@@ -66,42 +63,15 @@ MarketLogic.prototype.getActions = function() {
         	if (currdayav > lastdayav) {
 
                 console.log("BUY: " + symb);
-        		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 10, 1))
+        		actions.push(cm.buy(Math.floor (Math.random() * MAX_INT), symb, fivedays - 10, 1));
         	}
         }
 
-
-        /*if (highSell && lowBuy && highSell[0] && lowBuy[0] && highSell[0]  - 1> lowBuy[0]) {
-        	var buy= false;
-        	var sell=false;
-        	var ord = this.orders.orders;
-            var time = new Date().getTime();
-        	for (var i in this.orders.orders){
-        		if (ord.hasOwnProperty(i) && ord[i][1].symbol == symb){
-                    actions.push ({type:"cancel", order_id:ord[i][1].order_id});
-                    this.orders.out(ord[i][1].order_id);
-        		}
-
-        	}
-        	if (true) {
-                var purchase = cm.buy(Math.floor (Math.random() * MAX_INT)
-        			, symb, lowBuy[0] , 1);
-        		actions.push (purchase);
-                this.orders.add(purchase);
-        	}
-        	if (true) {
-                console.log("making sale");
-                var sale = cm.sell(Math.floor (Math.random() * MAX_INT),
-        			symb, highSell[0] , 1);
-        		actions.push (sale);
-                this.orders.add(sale);
-        	}
-        }*/
        
     }.bind(this));
 
 	return actions; 
-}
+};
 
 
 // stores an object containing an array of at most one hu ndread of the previous books for this type
@@ -129,7 +99,7 @@ Books.prototype.getAverage = function(days, type) {
 		}
 	}
 	return Math.round(counter2/(2 * counter));
-}
+};
 
 Books.prototype.updateBook = function(book) {
 	this.books[book.symbol].push(book);
@@ -161,7 +131,7 @@ Books.prototype.getFairValue = function(type) {
 		}
 	}
 	return (totalBuy + totalSell) / (2 * counter);
-}
+};
 
 Books.prototype.getHighestBuys = function(type) {
 	var typeBooks = this.books[type];
@@ -171,7 +141,7 @@ Books.prototype.getHighestBuys = function(type) {
 		return -1;
 	});
 	return typeBooks;
-}
+};
 
 Books.prototype.getLowestSells = function(type) {
 	var typeBooks = this.books[type];
@@ -182,42 +152,42 @@ Books.prototype.getLowestSells = function(type) {
 			return -1;
 	});
 	return typeBooks;
-}
+};
 
 Books.prototype.getCurrHighestBuys = function(type) {
 	return this.getCurrBook(type).buy[0];
-}
+};
 
 Books.prototype.getCurrLowestSell = function(type) {
 	return this.getCurrBook(type).sell[0];
-}
+};
 
 // add, remove, confirm ()
 var OurOrders = function() {
 	this.orders = {
 	}; // each element will be a tuple, with order object, and livestate
-} 
+}; 
 
 	OurOrders.prototype.ack = function(id) {
 	if(this.orders[id])
 		this.orders[id][0] = true;
-}
+};
 
 OurOrders.prototype.add = function(foo) {
 	this.orders[foo.order_id] = [false, foo];
-}
+};
 
 
 OurOrders.prototype.out = function(id) {
     if (this.orders[id])
         delete this.orders[id];
-}
+};
 
 OurOrders.prototype.fill = function(id, size) {
 	if(this.orders[id])
 		this.orders[id][1].size -= size;
 
-}
+};
 
 
 module.exports.MarketLogic = MarketLogic;
