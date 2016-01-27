@@ -24,6 +24,8 @@ Assets.prototype.updateAssets =  function (symbol, dir, size){
     else
         sign = -1;
     this.assets[symbol] +=Number(size) * sign;
+};
+
 MarketLogic.prototype.update = function(book) {
 	// logic for moving average
 	this.books.updateBook(book);
